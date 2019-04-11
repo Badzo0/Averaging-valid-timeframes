@@ -1,0 +1,26 @@
+path= 'HCP_S1200_997_tfMRI_ALLTASKS_level2_cohensd_hp200_s2_MSMAll.dscalar.nii';
+mycifti_trans = ft_read_cifti('bold10s3_g7_hpss_res-mVWMWB1demarked.dtseries.nii');
+mycifti_trans22 = ft_read_cifti('bold3s3_g7_hpss_res-mVWMWB1demarked.dtseries.nii');
+
+%First extraction
+result3 = reshape(nanmean(reshape( mycifti_trans.dtseries.',3,[])),size(mycifti_trans.dtseries,2)/3,[]).';
+time3 = reshape(nanmean(reshape(mycifti_trans.time .',3,[])),size(mycifti_trans.time,2)/3,[]).';
+
+
+mycifti_trans.dtseries=result3; 
+mycifti_trans.time=time3;
+
+ft_write_cifti('bold10s3_g7_hpss_res-mVWMWB1demarked_AvgValidFrames.dtseries.nii', mycifti_trans, 'parameter', 'dtseries');
+
+%Second extraction
+
+result = reshape(nanmean(reshape(mycifti_trans2.dtseries .',3,[])),size(mycifti_trans2.dtseries,2)/3,[]).';
+time = reshape(nanmean(reshape(mycifti_trans2.time.',3,[])),size(mycifti_trans2.time,2)/3,[]).';
+
+
+mycifti_trans2.dtseries=result; 
+mycifti_trans2.time=time;
+
+ft_write_cifti('bold3s3_g7_hpss_res-mVWMWB1demarked_AvgValidFrames.dtseries.nii', mycifti_trans2, 'parameter', 'dtseries');
+
+
